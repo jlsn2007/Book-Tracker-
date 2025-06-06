@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./pages/Welcome";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import PageNotFound from "./pages/pageNotFound";
 import Books from "./pages/Books";
 import { Toaster } from "react-hot-toast";
@@ -13,9 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/books/:id" element={<Books />} />
-          <Route path="/books/new" element={<Books />} />
-          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/books/:id?" element={<Books />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 

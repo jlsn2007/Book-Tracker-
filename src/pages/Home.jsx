@@ -1,12 +1,11 @@
-import React from "react";
+import { Link } from 'react-router-dom';
 import Titulo from "../components/Titulo"
-import useFetchBooks from "../hooks/books/useFetchBook";
-import useBookActions from "../hooks/books/useBookActions";
-import ButtonDelete from "../components/ButtonDelete";
 import Button from "../components/Button";
+import ButtonDelete from "../components/ButtonDelete";
+import useFetchBooks from "../hooks/books/useFetchBook";
 import { optionSelect } from "../utils/apiURL";
 import useBookActions from "../hooks/books/useBookActions";
-import useFetchBook from "../hooks/books/useFetchBook";
+
 
 const Home = () => {
 
@@ -33,31 +32,31 @@ const Home = () => {
           <thead className="bg-gray-100 text-gray-700 text-left text-sm">
             <tr>
               <th className="border border-gray-300 p-2">Autor</th>
-              <th className="border border-gray-300 p-2">Libro</th>
-              <th className="border border-gray-300 p-2">Estado</th>
+              <th className="border border-gray-300 p-2">Título</th>
               <th className="border border-gray-300 p-2">Género</th>
+              <th className="border border-gray-300 p-2">Estado</th>
               <th className="border border-gray-300 p-2">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {books?.map((user) => (
+            {books?.map((book) => (
               <tr
-                key={books.id}
+                key={book.id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
-                <td className="px-4 py-2">{user.nombre}</td>
-                <td className="px-4 py-2">{user.apellido}</td>
-                <td className="px-4 py-2">{user.correo }</td>
+                <td className="px-4 py-2">{book.autor}</td>
+                <td className="px-4 py-2">{book.titulo}</td>
+                <td className="px-4 py-2">{book.genero }</td>
                 <td className="px-4 py-2">
-                  {optionSelect.find((opt) => opt.value === user.especialidad)
-                  ?.label || "Sin asignar"}
+                  {optionSelect.find((opt) => opt.value === book.estado)
+                  ?.label || "Sin estado"}
                 </td> 
                 <td>
                   <Button text="Editar" 
-                  onClick={() => handleUpdateUser(user.id)}
+                  onClick={() => handleUpdateBook(book.id)}
                   />
                   <ButtonDelete text="Eliminar" 
-                  onClick={() => deleteUser(user.id)}
+                  onClick={() => deleteBook(book.id)}
                   />
                 </td>
                 

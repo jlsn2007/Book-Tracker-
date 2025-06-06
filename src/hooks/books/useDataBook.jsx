@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { url } from "../../utils/apiURL";
 import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { url } from "../../utils/apiURL";
+import useFetchBook from "./useFetchBook"
 
 const useDataBook = (methods) => {
+  const { getBookById, getBooks } = useFetchBook();
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -14,47 +15,68 @@ const useDataBook = (methods) => {
     formState: { errors },
   } = methods;
 
-  const saveBook = async (data) => {
+  const navigate = useNavigate();
+
+  const saveBookform = async (dataForm) => {
+
     try {
-      const res = await fetch(url, {
+
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { 
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(dataForm),
       });
-      if (!res.ok) throw new Error("No se pudo guardar");
+      if (!response.ok) {
+        toast.error("Failed to add book");
+        throw new Error("No se pudo guardar el libro");
+      }
       toast.success("Libro guardado correctamente");
       navigate("/home");
-    } catch (err) {
-      toast.error("Error al guardar el libro");
-      console.error(err);
+    } catch (error) {
+      console.error("Error al guardar el libro", error);
     } finally {
       reset();
+      getBooks();
     }
   };
 
-  const editBook = async (data) => {
+  const editBook = async (dataForm) => {
     try {
-      const res = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${url}/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { 
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(dataForm),
       });
-      if (!res.ok) throw new Error("No se pudo editar");
+      if (!response.ok) {
+        toast.error("Failed to update book");
+        throw new Error("No se pudo editar el libro");
+      }
       toast.success("Libro editado correctamente");
       navigate("/home");
-    } catch (err) {
-      toast.error("Error al editar el libro");
-      console.error(err);
+    } catch (error) {
+      console.error("Error updating book:", error);
+      toast.error("Failed to update book");
     } finally {
       reset();
+      getBooks();
     }
   };
 
   const loadBook = async () => {
     if (id) {
-      const res = await fetch(`${url}/${id}`);
-      const data = await res.json();
-      reset(data);
+      const book = await getBookById(id);
+      if (book) {
+        reset({
+          autor: book?.autor,
+          titulo: book?.titulo,
+          genero: book?.genero,
+          estado: book?.estado,
+        });
+      }
     }
   };
 
@@ -62,18 +84,25 @@ const useDataBook = (methods) => {
     loadBook();
   }, [id]);
 
-  const handleBookAction = (data) => {
+  const handleBookAction = (dataForm) => {
     if (id) {
-      editBook(data);
+      editBook(dataForm);
     } else {
-      saveBook(data);
+      saveBookform(dataForm);
     }
+  };
+
+  const handleUpdateBook = (id) => {
+    navigate(`/users/${id}`);
   };
 
   return {
     register,
     handleSubmit: handleSubmit(handleBookAction),
     errors,
+    getBookById,
+    handleUpdateBook,
+    loadBook,
   };
 };
 

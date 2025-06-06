@@ -17,7 +17,7 @@ const InputFile = ({
       </label>
 
       <div className="mt-2 flex flex-col items-center gap-4 rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-        {/* Input de archivo */}
+
         <label
           htmlFor={name}
           className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500"
@@ -35,7 +35,6 @@ const InputFile = ({
         </label>
         <p className="text-xs text-gray-600">PNG, JPG, GIF up to 10MB</p>
 
-        {/* Previsualizaciones */}
         {imagePreviews.length > 0 && (
           <div className="flex gap-4 flex-wrap justify-center mt-4">
             {imagePreviews.map((preview, index) => (
