@@ -17,12 +17,15 @@ const Welcome = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
-        <SubTitulo titulo="Bienvenido a la Aplicación CRUD" />
+        <SubTitulo titulo="Bienvenid@ a BookTracker 📚" />
         <p className="mb-6 text-gray-700">
-          ¡Gracias por visitar nuestra aplicación CRUD!
+        Esta aplicación te permitirá guardar el título, autor, género,
+        año de publicación y el estado de lectura (Leído, Leyendo, Pendiente) de cada
+        libro que has pensado o empezado a leer. Además, podrás ver tu progreso, marcar libros terminados o
+        agregar nuevas lecturas con facilidad. ¡Disfruta está experiencia y lleva tu pasión por la lectura al siguiente nivel!
         </p>
 
-        <Button type="button" onClick={handleAccept} text="Aceptar" />
+        <Button type="button" onClick={handleAccept} text="¡Vamos a ello!" />
       </div>
     </div>
   );
