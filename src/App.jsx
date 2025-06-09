@@ -1,7 +1,8 @@
 import React from "react";
+import '../src/pages/styles.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./pages/Welcome";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import PageNotFound from "./pages/pageNotFound";
 import Books from "./pages/Books";
 import { Toaster } from "react-hot-toast";
